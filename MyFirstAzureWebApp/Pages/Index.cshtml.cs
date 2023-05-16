@@ -15,9 +15,10 @@ public class IndexModel : PageModel
     }
     public void OnGet()
     {
-        var environment = _configuration["BuildEnviroment:Name"];
-        ViewData["enviroment"] = environment;
+         var environment = _configuration["BuildEnvironment:Name"];
+        ViewData["environment"] = environment;
     }
+
     private readonly IDictionary<string, string> Users = new Dictionary<string, string>()
     {
         { "test", "passcode"}
