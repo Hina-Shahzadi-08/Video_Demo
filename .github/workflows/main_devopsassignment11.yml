@@ -97,7 +97,7 @@ jobs:
     permissions:
       contents: none
     runs-on: ubuntu-latest
-    needs: build
+    needs:  deploy_Dev
     environment:
       name: 'Testing'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
@@ -119,7 +119,7 @@ jobs:
     permissions:
       contents: none
     runs-on: ubuntu-latest
-    needs: build
+    needs:  deploy_TST
     environment:
       name: 'Staging'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
