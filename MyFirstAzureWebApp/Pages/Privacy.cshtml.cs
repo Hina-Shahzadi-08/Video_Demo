@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Video_Demo.Pages;
+namespace MyFirstAzureWebApp.Pages;
 
 public class PrivacyModel : PageModel
 {
