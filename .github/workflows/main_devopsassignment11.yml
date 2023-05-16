@@ -70,13 +70,13 @@ jobs:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
 
-  deploy:
+  deploy_Dev:
     permissions:
       contents: none
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: ''
+      name: 'Development'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
@@ -89,7 +89,52 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: My Web App
-          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE}}
+          app-name: DevopsAssignment11
+          publish-profile: ${{ secrets.HINA_PUBLISH_PROFILE}}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+ 
+  deploy_TST:
+    permissions:
+      contents: none
+    runs-on: ubuntu-latest
+    needs:  deploy_Dev
+    environment:
+      name: 'Testing'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: .net-app
+          
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: hadiaassign
+          publish-profile: ${{ secrets.HADIA_PROFILE}}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+  deploy_STG:
+    permissions:
+      contents: none
+    runs-on: ubuntu-latest
+    needs:  deploy_TST
+    environment:
+      name: 'Staging'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: .net-app
+          
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: Rabia11
+          publish-profile: ${{ secrets.RABIA_PROFILE}}
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
  
